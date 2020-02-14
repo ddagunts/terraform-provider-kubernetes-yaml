@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform/plugin"
-	kubernetes "github.com/nabancard/terraform-provider-kubernetes-yaml/kubernetes"
+	"github.com/hashicorp/terraform-plugin-sdk/plugin"
+	kubernetes "github.com/liskl/terraform-provider-kubernetes-yaml/kubernetes"
 )
 
 func main() {

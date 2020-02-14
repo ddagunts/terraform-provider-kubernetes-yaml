@@ -3,7 +3,7 @@ provider "k8sraw" {
 }
 
 resource "k8sraw_yaml" "test" {
-  depends_on = ["k8sraw_yaml.definecrd"]
+  depends_on = [ k8sraw_yaml.definecrd ]
 
     yaml_body = <<YAML
 apiVersion: couchbase.com/v1
@@ -12,7 +12,7 @@ metadata:
   name: name-here-cluster
 spec:
   baseImage: name-here-image
-  version: name-here-image-version
+  version: 6.0.1
   authSecret: name-here-operator-secret-name
   exposeAdminConsole: true
   adminConsoleServices:
