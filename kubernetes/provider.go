@@ -211,7 +211,6 @@ func providerConfigure(d *schema.ResourceData, terraformVersion string) (interfa
 	}
 
 	return meta, nil
-	//return &KubeClientsets{k, a}, nil
 }
 
 func initializeConfiguration(d *schema.ResourceData) (*restclient.Config, error) {

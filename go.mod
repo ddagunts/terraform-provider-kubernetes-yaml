@@ -1,4 +1,4 @@
-module github.com/liskl/terraform-provider-kubernetes-yaml
+module github.com/nabancard/terraform-provider-kubernetes-yaml
 
 go 1.13
 
