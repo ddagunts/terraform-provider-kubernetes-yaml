@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/cenkalti/backoff"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/icza/dyno"
 	yamlParser "gopkg.in/yaml.v2"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -269,7 +269,7 @@ func getRestClientFromYaml(yaml string, provider KubeProvider) (dynamic.Resource
 	log.Printf("[UNSTRUCT]: %+v\n", unstructContent)
 
 	// Use the k8s Discovery service to find all valid APIs for this cluster
-	clientSet, config := provider()
+	clientSet, _, config := provider()
 	discoveryClient := clientSet.Discovery()
 	resources, err := discoveryClient.ServerResources()
 	// There is a partial failure mode here where not all groups are returned `GroupDiscoveryFailedError`
