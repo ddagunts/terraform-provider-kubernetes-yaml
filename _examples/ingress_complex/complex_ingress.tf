@@ -3,10 +3,10 @@ resource "kubernetes_secret" "gitlfs_tls" {
     name      = "name-here"
   }
 
-  data {
-    tls.crt = "somedata"
-    tls.key = "moredata"
-  }
+  data = map(
+    "tls.crt", "somedata",
+    "tls.key", "moredata"
+  )
 }
 
 resource "k8sraw_yaml" "test" {

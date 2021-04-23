@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/hashicorp/terraform/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	upstream "github.com/terraform-providers/terraform-provider-kubernetes/kubernetes"
 	"k8s.io/apimachinery/pkg/api/errors"
 )
@@ -36,7 +36,7 @@ func testAccCheckK8srawExists(s *terraform.State) error {
 }
 
 func testAccCheckK8srawStatus(s *terraform.State, shouldExist bool) error {
-	conn, _ := testAccProvider.Meta().(KubeProvider)()
+	conn, _, _ := testAccProvider.Meta().(KubeProvider)()
 
 	for _, rs := range s.RootModule().Resources {
 		if rs.Type != "k8sraw_yaml" {

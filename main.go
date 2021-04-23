@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/hashicorp/terraform/plugin"
+	"github.com/hashicorp/terraform-plugin-sdk/plugin"
 	kubernetes "github.com/nabancard/terraform-provider-kubernetes-yaml/kubernetes"
 )
 
