@@ -135,7 +135,7 @@ func resourceKubernetesYAMLCreate(d *schema.ResourceData, meta interface{}) erro
 		return fmt.Errorf("failed to create resource in kubernetes: %+v", err)
 	}
 
-	d.SetId(response.GetSelfLink())
+	d.SetId(response.GetNamespace() + "/" + response.GetName())
 	// Capture the UID and Resource_version at time of creation
 	// this allows us to diff these against the actual values
 	// read in by the 'resourceKubernetesYAMLRead'
@@ -170,7 +170,7 @@ func resourceKubernetesYAMLRead(d *schema.ResourceData, meta interface{}) error 
 			return nil
 		}
 		if metaObjLive != nil {
-			return fmt.Errorf("failed to get resource '%s' from kubernetes: %+v", metaObjLive.GetSelfLink(), err)
+			return fmt.Errorf("failed to get resource '%s/%s' from kubernetes: %+v", metaObjLive.GetNamespace(), metaObjLive.GetName(), err)
 		} else {
 			return fmt.Errorf("failed to get resource '%s' from kubernetes: %+v", rawObj.GetName(), err)
 		}
@@ -205,7 +205,7 @@ func resourceKubernetesYAMLDelete(d *schema.ResourceData, meta interface{}) erro
 	metaObj := &meta_v1beta1.PartialObjectMetadata{}
 	err = client.Delete(rawObj.GetName(), &meta_v1.DeleteOptions{})
 	if err != nil {
-		return fmt.Errorf("failed to delete kubernetes resource '%s': %+v", metaObj.SelfLink, err)
+		return fmt.Errorf("failed to delete kubernetes resource '%s/%s': %+v", metaObj.GetNamespace(), metaObj.GetName(), err)
 	}
 
 	// Success remove it from state
@@ -233,7 +233,7 @@ func resourceKubernetesYAMLExists(d *schema.ResourceData, meta interface{}) (boo
 	metaObj, err := client.Get(rawObj.GetName(), meta_v1.GetOptions{})
 	exists := !errors.IsGone(err) || !errors.IsNotFound(err)
 	if err != nil && !exists {
-		return false, fmt.Errorf("failed to get resource '%s' from kubernetes: %+v", metaObj.GetSelfLink(), err)
+		return false, fmt.Errorf("failed to get resource '%s/%s' from kubernetes: %+v", metaObj.GetNamespace(), metaObj.GetName(), err)
 	}
 	if exists {
 		return true, nil
